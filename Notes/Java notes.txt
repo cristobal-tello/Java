@@ -1,0 +1,88 @@
+Java tricks
+===========
+
+* Directives, declarations, scriptlets, and expressions
+
+<%@ this is a directive %>
+<%! This is a declaration %>
+<% this is a scriptlet %>
+<%= this is an expression %>
+
+- Sample
+
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%!
+	private final int five = 0;
+	protected String cowboy = "rodeo";
+	
+	//The assignment below is not declarative and is a syntax error if uncommented
+	//cowboy = "test";
+	public long addFive(long number)
+	{
+		return number + 5L;
+	}
+	
+	public class MyInnerClass
+	{
+	}
+
+	MyInnerClass instanceVariable = new MyInnerClass();
+	//WeirdClassWithinMethod is in method scope, so the declaration below is
+	// a syntax error if uncommented
+	//WeirdClassWithinMethod bad = new WeirdClassWithinMethod();
+%>
+
+<%
+	class WeirdClassWithinMethod
+	{
+	}
+	
+	WeirdClassWithinMethod weirdClass = new WeirdClassWithinMethod();
+	MyInnerClass innerClass = new MyInnerClass();
+	int seven;
+	seven = 7;
+%>
+<%= "Hello, World" %><br />
+<%= addFive(12L) %>
+
+* Be careful with strings in Java
+
+package stringequality;
+
+public class StringEquality {
+
+    public static void main(String[] args) {
+        String s1 = "Hello";
+        s1 += " world!!!";
+        
+        String s2 = "Hello world!!!";
+        System.out.println("With '==' operator:");
+        // == operator in strings doens't works as we expected
+        // In Java there is not operator overloading
+        // C#, == operator is overloaded
+        if (s1 == s2) {
+            System.out.println("Strings are the same");
+        }
+        else {
+            System.out.println("Strings ARE DIFFERENT");
+        }
+        System.out.println("\nWith 'equals' method:");
+        if(s1.equals(s2)) {
+            System.out.println("Strings are the same");
+        }
+        else {
+            System.out.println("Strings ARE DIFFERENT");
+        }
+    }
+}
+
+* Filters (like Interception/Behaviours in C#,Unity)
+
+Filters in Java can be configured in the web descriptor file or programatically.
+
+The xxxxxListener configure how Filter will be fired. The xxxxxxFilter class will be the action when filter is raised.
+
+Usual actions where Filter can be useful: add a tracer log, add a login action (that's, make sure the customer it's already logged)
+
+
+

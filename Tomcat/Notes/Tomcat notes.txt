@@ -1,0 +1,60 @@
+TOMCAT
+======
+
+* Directory:
+C:\Program Files\Apache Software Foundation\Apache Tomcat 8.0.27
+
+Note (On Linux), make sure Java and Java JDK are already installed.
+To install JDK in Ubuntu:
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+
+If you want to change the version, change the 8 by the version that you want
+
+
+
+* Start Tomcat from Command line
+Go to C:\Program Files\Apache Software Foundation\Apache Tomcat 8.0.27\bin and run startup.bat.
+Then open http://localhost:8080/
+
+* To configure Tomcat for its first use, start by opening the file conf/tomcat-users.xml in your favorite text editor. Place the following tag between the <tomcat-users>
+</tomcat-users> XML tags (User will be 'admin' and password 'admin' as well):
+
+<role rolename="manager-gui"/>
+<user username="admin" password="admin" roles="manager-gui" />
+
+* By default, Tomcat 8.0 compiles JavaServer Pages files with Java SE 6 language support even
+if it runs on Java SE 8. These new Servlet init parameters instruct Tomcat to compile JSP
+files with Java SE 8 language features, instead. Open the conf/web.xml file. Search the file for the text org.apache.jasper.servlet and add:
+<init-param>
+<param-name>compilerSourceVM</param-name>
+<param-value>1.8</param-value>
+</init-param>
+<init-param>
+<param-name>compilerTargetVM</param-name>
+<param-value>1.8</param-value>
+</init-param>
+
+* DeployIng and UndeployIng applications in Tomcat
+
+You can deploy and undeploy Java EE web applications in Tomcat. You have two options for accomplishing this:
+a) Manually by placing the application in the webapps directory
+
+Deploying an application manually on Tomcat is simple — just place the *.war file in Tomcat’s webapps directory. 
+If Tomcat is running, within a few moments Tomcat should automatically unpack the application file into a directory with the same name minus the
+.war extension. 
+
+If Tomcat is not running, you can start it, and the application file will unpack as Tomcat starts. 
+
+When the application has unpacked, open your browser and navigate to:
+
+http://localhost:8080/war-deployment/ 
+
+b) Using the Tomcat manager application
+
+Open your browser and navigate to http://localhost:8080/manager/html
+Use the user and password that you previously set on "To configure Tomcat for its first use..."
+
+Scroll down to the Deploy section and find the form “WAR file to deploy.” In the “Select WAR file to upload” field, choose the sample-deployment.war file from your filesystem.
+When you click in OK, the WAR file uploads to Tomcat, which deploys the application. The sample-deployment directory is again created in Tomcat’s webapps directory.

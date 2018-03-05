@@ -1,0 +1,1 @@
+I use NetBeans for these samples. You will need adjust some settings if you want to use another IDE.

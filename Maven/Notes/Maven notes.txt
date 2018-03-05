@@ -1,0 +1,106 @@
+Maven notes
+===========
+
+1) Create a project using Maven
+Maven will ask some question about your Company (groupId), etc
+
+Simple:
+mvn archetype:generate -DarchetypeArtifactId=maven-archetype-quickstart
+
+Web
+mvn archetype:generate -DarchetypeArtifactId=maven-archetype-webapp
+
+- Tricks:
+
+See content of jar file
+jar -tf <jarfile>.jar | less	(Linux)     
+jar -tf <jarfile>.jar | more	(Windows)
+
+
+After this, go to inside the project folder (where is pom.xml) file an run, to update all the dependencies:
+
+mvn install
+
+2) To open this project in Eclipse, use Import option into File menu
+File|Import, search for Maven. Choose 'Existing Maven Projects'
+
+
+3) pom.xml
+pom.xml file inherits from super:pom.xml (by default). So a lot of settings are not in pom.xml because there are assuming that comes from super:pom.xml.
+But there is way to see how full pom.xml. Go to inside a folder where pom.xml file is and run:
+
+mvn help:effective-pom
+
+4) pom.xml can be parametrid using properties
+Inside pom.xml we can define properties and use them at the same time using ${<property_name>}. Eg:
+
+...
+<properties>
+	<junit.version>3.8.1</junit.version>
+</properties>
+<dependencies>
+	<dependency>
+      		<groupId>junit</groupId>
+      		<artifactId>junit</artifactId>
+		<version>{junit.version}</version>
+      		<scope>test</scope>
+    	</dependency>
+</dependencies>
+...
+
+5) Build the project
+Maven can build your project. Build means, tryt to create the build, pass the test and create .jar file. All files will be created in target directory.
+To do that, inside pom.xml folder, run:
+
+mvn package
+
+You can see the result of test on target/surefire-reports folder on Eclipse (don't forget to Refresh)
+
+5) Copy an external .jar file into maven in order to be used later in a project
+If you have a custom/old/is not into super maven repostiory .jar file and you want to install into your maven repository, you can do add it like this:
+
+eg: image-editor.jar is the file that you want to install into repository
+
+mvn install:install-file -Dfile:<full_path>/image-editor.jar -DgroupId=com.othercompany -DartifactId=image-editor -Dversion=1.2.3 -Dpackaging=jar
+
+6) When you create a webapp, there is a quick way to publish it to test how it works.
+For this purposes, you need to use jetty (https://www.eclipse.org/jetty/). Jetty it's a pretty simple Web Server
+
+To test it, you need to setup <build> section in pom.xml
+
+a) Create a simple webapp, follow 1) step, webapp
+b) Add next on pom.xml into build section
+
+<build>
+    ....
+    <plugins>
+        <plugin>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-maven-plugin</artifactId>
+            <!-- You can find versions on http://search.maven.org/#search%7Cgav%7C1%7Cg%3A%22org.eclipse.jetty%22%20AND%20a%3A%22jetty-maven-plugin%22 -->
+            <version>9.2.22.v20170606</version>
+            <configuration>
+                <scanIntervalSeconds>10</scanIntervalSeconds>
+            </configuration>
+        </plugin>
+    </plugins>
+	...
+</build>
+
+c) To run jetty in your project: mvn jetty:run
+d) Go to localhost:8080
+
+
+Note: Be careful when we use Maven and Netbeans when you add a new Servlet. If you not define a <sourceDirectory> into <build> section in pom.xml the servlet will not copy into .jar/.war file and then it's impossible to run the app.
+
+I added next into <build> section:
+
+<sourceDirectory>src/main</sourceDirectory>
+
+Create servlet in this directory.
+
+
+7) In Maven there are release (ready for production) artifcats and snapshots artifacts (SNAPSHOT, usually latest version)
+
+8) In Maven, there is way to create Multi-module project. That's a pom.xml in the root. The content of this pom.xml is inherit on projects inside this root.
+It could be useful to place some config. values for all projects.

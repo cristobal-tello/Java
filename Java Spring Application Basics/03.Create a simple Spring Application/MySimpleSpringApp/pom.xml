@@ -3,7 +3,7 @@
   <groupId>org.demo</groupId>
   <artifactId>mySimpleSpringApp</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>Some name</name>
+    <name>03.Create a simple Spring Application</name>
   <description>Any description</description>
   
   <dependencies>

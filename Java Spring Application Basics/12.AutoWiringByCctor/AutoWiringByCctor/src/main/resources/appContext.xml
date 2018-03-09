@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="unique_id_dairy" class="autoWiringByCctor.Dairy" />
+	<bean id="unique_id_fruit" class="autoWiringByCctor.Fruit" />
+	<bean id="unique_id_grain" class="autoWiringByCctor.Grain" />
+	<bean id="unique_id_meat" class="autoWiringByCctor.Meat" />
+	<bean id="unique_id_vegetable" class="autoWiringByCctor.Vegetable" />
+
+	<bean id ="unique_id_meal" class="autoWiringByCctor.Meal">
+		<constructor-arg index="0" ref="unique_id_fruit" />	
+		<constructor-arg index="1" ref="unique_id_dairy" />
+		<constructor-arg index="2" ref="unique_id_grain" />
+		<constructor-arg index="3" ref="unique_id_meat" />
+		<constructor-arg index="4" ref="unique_id_vegetable" />
+	</bean>
+	
+	<bean id = "unique_id_byCctor" class="autoWiringByCctor.Meal" autowire="constructor"/>
+	
+</beans>

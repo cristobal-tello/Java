@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="unique_id_dairy" class="autoWiringByTypeApp.Dairy" />
+	<bean id="unique_id_fruit" class="autoWiringByTypeApp.Fruit" />
+	<bean id="unique_id_grain" class="autoWiringByTypeApp.Grain" />
+	<bean id="unique_id_meat" class="autoWiringByTypeApp.Meat" />
+	<!--  Spring only can resolved the object is there is only one  -->
+	<!--  Remove this line to run the app, just set attribute autowire-candidate=false (true by default) -->
+	<bean id="unique_id_meat2" class="autoWiringByTypeApp.Meat" autowire-candidate="true" />
+	<bean id="unique_id_vegetable" class="autoWiringByTypeApp.Vegetable" />
+
+	<bean id ="unique_id_meal" class="autoWiringByTypeApp.Meal">
+		<property name="dairy" ref="unique_id_dairy" />
+		<property name="fruit" ref="unique_id_fruit" />
+		<property name="grain" ref="unique_id_grain" />
+		<property name="meat" ref="unique_id_meat" />
+		<property name="vegetable" ref="unique_id_vegetable" />
+	</bean>
+	
+	<bean id = "unique_id_autowired" class="autoWiringByTypeApp.Meal" autowire="byType" />
+
+</beans>

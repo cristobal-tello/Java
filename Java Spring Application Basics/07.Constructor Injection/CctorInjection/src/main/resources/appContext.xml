@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="unique_id_dairy" class="cctorInjectionApp.Dairy" />
+	<bean id="unique_id_fruit" class="cctorInjectionApp.Fruit" />
+	<bean id="unique_id_grain" class="cctorInjectionApp.Grain" />
+	<bean id="unique_id_meat" class="cctorInjectionApp.Meat" />
+	<bean id="unique_id_vegetable" class="cctorInjectionApp.Vegetable" />
+
+	<bean id ="unique_id_meal" class="cctorInjectionApp.Meal">
+		<constructor-arg index="0" ref="unique_id_fruit" />
+		<constructor-arg index="1" ref="unique_id_dairy" />
+		<constructor-arg index="2" ref="unique_id_grain" />
+		<constructor-arg index="3" ref="unique_id_meat" />
+		<constructor-arg index="4" ref="unique_id_vegetable" />
+	</bean>
+	
+	<bean id ="unique_id_meal_cctor" class="cctorInjectionApp.Meal">
+		<constructor-arg name="v" ref="unique_id_vegetable" />	<!-- I don't care about the order of the parameters because the're named -->
+		<constructor-arg name="d" ref="unique_id_dairy" />
+		<constructor-arg name="f" ref="unique_id_fruit" />
+		<constructor-arg name="m" ref="unique_id_meat" />		
+		<constructor-arg name="g" ref="unique_id_grain" />
+	</bean>
+</beans>

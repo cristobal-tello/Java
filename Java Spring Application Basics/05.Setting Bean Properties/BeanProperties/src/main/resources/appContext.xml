@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="unique_id_fruit" class="beanPropertiesApp.Fruit" />
+
+	<bean id="unique_id_fruit_orange" class="beanPropertiesApp.Fruit">
+		<constructor-arg index="0" value="Orange" />
+	</bean>
+	
+	<bean id="unique_id_vegetable" class="beanPropertiesApp.Vegetable" />
+	
+	<bean id="unique_id_vegetable_use_prop" class="beanPropertiesApp.Vegetable">
+		<property name="vegetableName" value="Lechuga" />	<!-- Spring will look for setVegetableName and getVegetableName methods in Vegetable class -->
+															<!--  You can also can use p-namespace. If yo're using Eclipse, open appContext.xml and take a look below tabs -->
+															<!--  Eg: https://www.concretepage.com/spring/example_p_namespace_spring -->
+	</bean>
+	
+	
+	<bean id="unique_id_fruit_list" class="beanPropertiesApp.Fruit"> 
+		<property name = "listFruit">	<!--  Spring will look get/set/ListFruit -->
+			<list>
+				<value>Limón</value>
+				<value>Manzana</value>
+				<value>Pera</value>
+			</list>fu
+		</property>
+	</bean>
+	
+	
+	<bean id="unique_id_fruit_map" class="beanPropertiesApp.Fruit"> <!--  Spring will look get/setListFruit -->
+		<property name = "mapFruit">	<!--  Spring will look get/set/MapFruit -->
+			<map>
+				<entry key="Limon" value="Amarilllo" />	
+				<entry key="Manzana" value="Rojo" />
+				<entry key="Pera" value="Verde" />
+			</map>
+		</property>
+	</bean>
+	
+	
+
+</beans>

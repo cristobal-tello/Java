@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<bean id="dairy" class="autoWiringByNameApp.Dairy" />	<!-- The name of the bean needs to match with the member (in this case on Meal class) -->
+	<bean id="unique_id_fruit" class="autoWiringByNameApp.Fruit" /> <!-- By name will not work because name of the bean doesnt match with the name of member, change if you want to work using byName -->
+	<bean id="grain" class="autoWiringByNameApp.Grain" />	<!-- It will work -->
+	<bean id="unique_id_meat" class="autoWiringByNameApp.Meat" />	<!-- By name will not work, change if you want to work using byName -->
+	<bean id="vegetable" class="autoWiringByNameApp.Vegetable" />	<!-- It will work -->
+
+	<bean id ="unique_id_meal" class="autoWiringByNameApp.Meal">
+		<property name="dairy" ref="dairy" />
+		<property name="fruit" ref="unique_id_fruit" />	<!-- Will not work -->
+		<property name="grain" ref="grain" />
+		<property name="meat" ref="unique_id_meat" />	<!-- Will not work -->
+		<property name="vegetable" ref="vegetable" />
+	</bean>
+	
+	<bean id = "unique_id_byName" class="autoWiringByNameApp.Meal" autowire="byName"/>
+
+</beans>

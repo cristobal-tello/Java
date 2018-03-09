@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="unique_id_dairy" class="innerOuterApp.Dairy" />
+	<bean id="unique_id_fruit" class="innerOuterApp.Fruit" />
+	<bean id="unique_id_grain" class="innerOuterApp.Grain" />
+	<bean id="unique_id_meat" class="innerOuterApp.Meat" />
+	<bean id="unique_id_vegetable" class="innerOuterApp.Vegetable" />
+	
+	<bean id ="unique_id_meal_cctor" class="innerOuterApp.Meal">
+		<constructor-arg name="v" ref="unique_id_vegetable" />	<!-- I don't care about the order of the parameters because the're named -->
+		<constructor-arg name="d" ref="unique_id_dairy" />
+		<constructor-arg name="f" ref="unique_id_fruit" />
+		<constructor-arg name="m" ref="unique_id_meat" />		
+		<constructor-arg name="g" ref="unique_id_grain" />
+	</bean>
+	
+	<bean id="mealOuterBean" class="innerOuterApp.Meal">
+		<property name="fruit">
+			<bean id="unique_id_apple" class="innerOuterApp.Apple">
+				<property name="name" value="apple"/>
+				<property name="description" value="Rounded fruit, usually red!!"/>
+			</bean>
+		</property>
+	</bean>
+
+</beans>

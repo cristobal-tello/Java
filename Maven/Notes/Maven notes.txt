@@ -104,3 +104,155 @@ Create servlet in this directory.
 
 8) In Maven, there is way to create Multi-module project. That's a pom.xml in the root. The content of this pom.xml is inherit on projects inside this root.
 It could be useful to place some config. values for all projects.
+
+
+9) Maven and spring
+If you want to create a web project and use Spring (in this example, I use Eclipse)
+a) From command line, create the web project using maven: mvn archetype:generate -DarchetypeArtifactId=maven-archetype-webapp
+
+b) Open the project from Eclipse. Right click on the project, Maven|Add Dependency. Look for 'spring'. Select 'spring-core' and 'spring-context'
+Eclipse will add into pom.xml something like this:
+
+<dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-context</artifactId>
+    	<version>4.0.6.RELEASE</version>
+</dependency>
+<dependency>
+  	<groupId>org.springframework</groupId>
+    	<artifactId>spring-core</artifactId>
+    	<version>4.0.6.RELEASE</version>
+</dependency>
+<dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-web</artifactId>
+    	<version>4.0.6.RELEASE</version>
+	</dependency>
+
+c) Create the package folder in 'src\main'. If my package will be com.toful, I need to create a 'folder', inside the 'java' folder, a 'com' folder and inside 'com' folder a 'toful' folder.
+
+d) Add a new interface in 'toful' folder, eg: GreetingService
+package com.toful;
+
+public interface GreetingService
+{
+    public String getGreeting(String name);
+}
+
+e) Add a new class inherits from previous interface. eg: GreetingServiceImpl
+
+package com.toful;
+
+public class GreetingServiceImpl implements GreetingService
+{
+    @Override
+    public String getGreeting(String name)
+    {
+        return "Hello, " + name + "!";
+    }
+}
+f) On WEB-INF folder, create a new xml file or 'Spring Bean Configuration File', save as rootContext.xml, add next:
+This file is responsible to create greetingServiceImpl instance using Spring
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <bean name="greetingServiceImpl" class="com.wrox.GreetingServiceImpl" />
+
+</beans>
+
+
+g) In order to force script to use previous 'rootContext.xml', we need edit 'web.xml' file on WEB-INF folder and add next:
+<web-app>
+...
+
+<context-param>
+  <param-name>contextConfigLocation</param-name>
+  <param-value>/WEB-INF/rootContext.xml</param-value>
+</context-param>
+
+<listener>
+  <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+</listener>
+
+<servlet-mapping>
+
+  <servlet-name>default</servlet-name>
+        
+  <url-pattern>/resource/*</url-pattern>
+    
+</servlet-mapping>
+
+
+...
+</web-app>
+
+h) Also, in web.xml, add next:
+
+<jsp-config>
+  <jsp-property-group>
+  <url-pattern>*.jsp</url-pattern>
+  <url-pattern>*.jspf</url-pattern>
+  <page-encoding>UTF-8</page-encoding>
+  <scripting-invalid>true</scripting-invalid>
+  <include-prelude>/WEB-INF/jsp/base.jspf</include-prelude>
+  <trim-directive-whitespaces>true</trim-directive-whitespaces>
+  <default-content-type>text/html</default-content-type>
+  </jsp-property-group>
+</jsp-config>
+
+<session-config>
+  <session-timeout>30</session-timeout>
+  <cookie-config>
+  <http-only>true</http-only>
+  </cookie-config>
+  <tracking-mode>COOKIE</tracking-mode>
+</session-config>
+    
+<distributable />
+
+i) I need to create 'base.jsf' on WEB-INF folder inside 'jsp' folder, add next:
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
+j) Add second context on web.xml
+<servlet>
+  <servlet-name>springDispatcher</servlet-name>
+  <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+  <init-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>/WEB-INF/servletContext.xml</param-value>
+  </init-param>
+  <load-on-startup>1</load-on-startup>
+</servlet>
+
+<servlet-mapping>
+  <servlet-name>springDispatcher</servlet-name>
+  <url-pattern>/</url-pattern>
+</servlet-mapping>
+
+k) Create servletContext.xml file on WEB-INF folder, add next:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+            http://www.springframework.org/schema/mvc
+            http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+
+    <mvc:annotation-driven />
+
+    <bean name="helloController" class="com.toful.HelloController">
+        <property name="greetingService" ref="greetingServiceImpl" />
+    </bean>
+
+</beans>
+
+l) 

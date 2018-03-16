@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	
+	<context:annotation-config/>	<!-- This app will use annotations -->
+	
+	<bean id="unique_id_dairy" class="autoWiringConstructor.Dairy" />
+	<bean id="unique_id_fruit" class="autoWiringConstructor.Fruit" />
+	<bean id="unique_id_grain" class="autoWiringConstructor.Grain" />
+	<bean id="unique_id_meat" class="autoWiringConstructor.Meat" />
+	<bean id="unique_id_vegetable" class="autoWiringConstructor.Vegetable" />
+
+	<bean id ="unique_id_meal" class="autoWiringConstructor.Meal" />
+	
+</beans>

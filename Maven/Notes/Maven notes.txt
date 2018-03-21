@@ -48,6 +48,14 @@ Inside pom.xml we can define properties and use them at the same time using ${<p
 </dependencies>
 ...
 
+- A little explanation about 'scope':
+
+If scope is set to Compile means that you need the JAR for compiling and running the app. For a web application, as an example, the JAR will be placed in the WEB-INF/lib directory.
+If it's set to Provided means that you need the JAR for compiling, but at run time there is already a JAR provided by the environment so you don't need it packaged with your app. For a web app, this means that the JAR file will not be placed into the WEB-INF/lib directory.
+
+For a webapp, if the app server already provides the JAR (or its functionality), then use "provided" otherwise use "compile".
+
+
 5) Build the project
 Maven can build your project. Build means, tryt to create the build, pass the test and create .jar file. All files will be created in target directory.
 To do that, inside pom.xml folder, run:
@@ -255,4 +263,28 @@ k) Create servletContext.xml file on WEB-INF folder, add next:
 
 </beans>
 
-l) 
+10) Create a webapp mvc
+-mvn archetype:generate -DarchetypeArtifactId=maven-archetype-webapp
+
+Add new dependencies on pom.xml:
+look for spring-webmvc and add it
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-webmvc</artifactId>
+    <version>4.3.14.RELEASE</version>
+</dependency>
+
+look for javax.servlet-api and scope = provided
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>javax.servlet-api</artifactId>
+    <version>3.1.0</version>
+    <scope>provided</scope>
+</dependency>
+look for jstl and scope = provided
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>jstl</artifactId>
+    <version>1.2</version>
+    <scope>provided</scope>
+</dependency>

@@ -5,9 +5,8 @@ import org.springframework.stereotype.Component;
 @Component("fourCyl")
 public class FourCylinderEngine implements Engine {
 
-	@Overridce
+	@Override
 	public int getNumberOfCylinders() {
-		// TODO Auto-generated method stub
 		return 4;
 	}
 

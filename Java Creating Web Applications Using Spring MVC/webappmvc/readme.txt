@@ -25,7 +25,7 @@ jst (provided)
 
 <servlet>
   	<servlet-name>MyDemoApp</servlet-name>
-  	<servlet-class>org.spring.framework.web.servlet.DispatcherServlet</servlet-class>
+  	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
   	<init-param>
   		<param-name>contextConfigLocation</param-name>
   		<param-value>/WEB-INF/config/myDemo-servletConfig.xml</param-value>
@@ -50,9 +50,72 @@ jst (provided)
 - Create the controller(s)
 
 Create a new package. Called 'com.demo.controllers'. Make sure you create the package in 'src/main/java. If not exist, just create it
-Create a class call MyDemoController
+Create a class call MyDemoController, like this
+
+package com.demo.controllers;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+public class MyDemoController {
+
+	//http://localhost:8080/webappmvc/getQuote.html
+	
+	@RequestMapping(value="/getQuote")
+	public String getRandomQuote(Model model)
+	{
+		model.addAttribute("randomQuote", "To be or not to be - Shakespeare");
+		
+		return "quote";		// Name of the view, that is .jsp file
+	}
+}
+
 
 - Create view(s)
 
+In WEB-INF folder, create another folder 'jsp'. Create a jsp file inside with the name 'quote.jsp'.
+Add next:
 
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>My demo app</title>
+</head>
+<body>
+<h1>The quote is:</h1>
+<p>${randomQuote}</p>
+</body>
+</html>
+
+- Resolview controller-view
+
+On myDemo-servletConfig.xml add next:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-4.0.xsd
+                           http://www.springframework.org/schema/mvc
+                           http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
 	
+	<mvc:annotation-driven/>
+	
+	<context:component-scan base-package="com.demo.controllers" />
+	
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+</beans>
+

@@ -3,7 +3,20 @@
 Add next dependencies:
 spring-webmvc
 javax.servlet-api (provided)
-jst (provided)
+javax.servlet » jstl (provided)
+
+On pom.xml add next plugin in <build>
+<plugins>
+    <plugin>
+      <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+    </plugin>
+</plugins>
+
+Also, add Maven dependecies in project. Project properties, search for 'Deployment Assembly", click Add, Java Build Path Entries, Maven Dependencies.
 
 - Configure web.xml, you need to put the servlets and the mapping
 	<servlet>
@@ -118,4 +131,3 @@ On myDemo-servletConfig.xml add next:
 	</bean>
 
 </beans>
-

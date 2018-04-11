@@ -86,3 +86,26 @@ Usual actions where Filter can be useful: add a tracer log, add a login action (
 
 
 
+* cacerts
+
+cacerts file is placed in %JAVA_HOME%\lib\security\cacerts
+or
+cacerts file is placed in %JRE_HOME%\lib\security\cacerts
+
+
+- Useful tool: http://keystore-explorer.org/ to avoid to type next commands.
+
+
+First you can check if your certificate is already in the truststore by running the following command: keytool -list -keystore "%JAVA_HOME%/jre/lib/security/cacerts" 
+
+Default password: changeit
+
+eg:
+C:\Program Files\Java\jdk1.8.0_144\jre\bin>keytool -list -keystore "C:\Program Files\Java\jdk1.8.0_144\jre\lib\security\cacerts"
+
+To add a certificate
+
+keytool -import -noprompt -trustcacerts -alias <AliasName> -file   <certificate> -keystore <KeystoreFile> -storepass <Password> 
+
+eg:
+keytool -import -noprompt -trustcacerts -alias T-SYSTEMS1 -file cert1.cer -keystore "C:\Program Files\Java\jdk1.8.0_144\jre\lib\security\cacerts" -storepass changeit

@@ -1,0 +1,49 @@
+OWasp Dependecy Checker
+=======================
+
+1) How to use it
+
+a) Simple way
+dependency-check --project "theprojectname" -scan "path to scan" 
+
+
+b) Extended way
+
+dependency-check --project Customer-Support-V2 -scan "C:\work\Java\Professional Java for Web Applications\Chapter 04\Customer-Support-v2" --out "C:\work\Java\Professional Java for Web Applications\Chapter 04\Customer-Support-v2" --disableAssembly
+
+dependency-check --project eets -scan "C:\strive\sources\eets" --out "C:\strive\sources\eets" --disableAssembly --proxyserver 10.49.1.1 -proxyport 8080
+
+dependency-check --project eets -scan "D:\sources\ettb" --out "D:\sources\ettb" --disableAssembly --proxyserver 10.49.1.1 -proxyport 8080
+
+D:\tools\dependency-check-3.1.2-release\dependency-check\bin>dependency-check --project eets -scan "D:\sources\ettb" --out "D:\sources\ettb" --disableAssembly -
+-proxyserver 10.49.1.1 --proxyport 8080  --proxyuser tse\ctello --proxypass LaSe
+xta6
+
+
+2) Maven plugin
+
+Download from: https://jeremylong.github.io/DependencyCheck/dependency-check-maven/index.html
+
+a) setup on Eclipse
+
+First, add next snippet into pom.xml file
+
+<plugin>
+<groupId>org.owasp</groupId>
+<artifactId>dependency-check-maven</artifactId>
+<version>3.1.2</version>
+<executions>
+<execution>
+<goals>
+<goal>check</goal>
+</goals>
+</execution>
+</executions>
+</plugin>
+
+
+Add a New Run Configuration. Use next syntax:
+
+
+org.owasp:dependency-check-maven:3.1.2:check
+

@@ -1,6 +1,65 @@
 Maven notes
 ===========
 
+* Introduction
+Maven provides an standard way to build, test, document and deploy a process
+
+* Project object model = pom.xml
+
+* How Maven works
+
+1.- Maven reads pom.xml file
+2.- Downloads dependencies into local repository
+3.- Execute life cycles/build phases and/or goals
+4.- Execute plugins
+
++-------------------------------+
+| POM file        		|
++-------------------------------+
+| +---------------------------+ |
+| | Build Life Cycle          | |
+| |	- Phases	      | |
+| |	- Goals		      | |
+| +---------------------------+ |
+| | Dependencies	      | |	
+| |	(Jars)		      | |==> Maven local repository
+| +---------------------------+ |	
+| | Build Plugins	      | |
+| +---------------------------+ |		
+| | Build Profiles	      | |	
+| +---------------------------+ |		
+|  			        |	
++-------------------------------+
+
+
+
+Setup the proxy:
+
+Go to C:\Program Files\apache-maven-3.5.2\conf (or similar)
+
+Edit settings.xml file
+
+<proxy>
+      
+	<id>optional</id>
+      
+	<active>true</active>
+      
+	<protocol>http</protocol>
+      
+	<username>TSE\<username></username>
+      
+	<password><yourpassowrd></password>
+      
+	<host>10.49.1.1</host>
+      
+	<port>8080</port>
+      
+	<nonProxyHosts>local.net|some.host.com</nonProxyHosts>
+    
+</proxy>
+
+
 1) Create a project using Maven
 Maven will ask some question about your Company (groupId), etc
 
@@ -288,3 +347,6 @@ look for jstl and scope = provided
     <version>1.2</version>
     <scope>provided</scope>
 </dependency>
+
+
+

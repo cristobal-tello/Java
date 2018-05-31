@@ -1,0 +1,71 @@
+* Taking a look some data of a server
+
+For Windows, download the binaries from https://nmap.org/download.html
+
+On Unix:
+
+nmap -open -sV blablalba.es
+
+With the previous information (server is Windows or Unix, Database ar MS Server or MySql, Webserver is Apache, Tomcat...), you can filter some options on Active Scan option
+
+* Site where you can make test
+
+webscantest.com
+
+* XSS Protection headers
+
+Make sure the server fill X-Content-Type-Options, X-Frame-Options, X-XSS-Protection to avoid XSS attacks.
+
+* Modify and resend POST request
+
+Eg: http://webscantest.com/datastore/search_by_id.php
+
+After scan, take a look in datastore/POST:search_by_id.php. Select it and go to Request tab
+
+Modify the id=1 to id=1'. To do this, on the datastore/POST:search_by_id.php select, Resend option and modify the value to id=1'
+
+This way we can detect if there is a problem with sql injection.
+
+On the output will see:
+
+
+Error 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &#039;&#039;&#039; at line 1 of SELECT * FROM inventory WHERE id = 
+
+
+* Modify GET
+
+eg: http://webscantest.com/datastore/search_get_by_id.php?id=3
+
+Use Resend option and modify the Request values
+
+GET http://www.tortosa.cat/noticies/noticia.php?lang=ca&id=12457 
+
+* Fuzzers
+
+In a login POST, it's possible to use Fuzz with a dictonary to figure out the user and the password (note: the user and password must be in the dictionary file)
+
+Use: Java customer-support-v3 example (Professional Java for Web Applications book) and a customer password file ()
+
+- ZAP also includes a little engine to check if the GET/POST page has SQL injection problem
+
+eg: http://webscantest.com/datastore/search_get_by_id.php?id=3
+
+From menu, select Fuzzer, select the value of the param that you want to hack, add Paypload, Type:File Fuzzers, select SQL Injection
+
+Also, with Fuzzer you can try to find XSS problems:
+
+eg:
+
+http://webscantest.com/crosstraining/aboutyou.php
+
+
+Select the param to fuzz.
+
+Choose xss 101 on Payload. Use IE to test it because Chrome protects XSS attacks
+
+
+http://webscantest.com/datastore/search_by_id.php
+
+* Wireshark
+
+http.request.method=="POST"

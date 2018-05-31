@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+	<context:annotation-config></context:annotation-config>
+
+	<bean id="car" class="com.toful.vehicles.Car" />
+	<bean id="log" class="com.toful.logs.Log" />
+	
+	<aop:config>
+		<aop:pointcut expression="execution(void com.toful.vehicles.Car.stop())" id="carDriveStop"/>
+		
+		<aop:aspect id="LoggerAspect" ref="log">
+			<aop:before method="vehicleAboutToMove" pointcut="execution(void com.toful.vehicles.Car.drive())"/>	<!-- Simple way -->
+			<aop:before method="vehicleAboutToStop" pointcut-ref="carDriveStop" /> <!-- Using Pointcut expression way -->
+		</aop:aspect>
+		
+	</aop:config>
+</beans>

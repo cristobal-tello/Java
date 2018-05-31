@@ -15,7 +15,7 @@
         <jsp:invoke fragment="headContent" />
     </head>
     <body>
-        <h1>Multinational Widget Corporation</h1>
+        <h1>Multinational Widget Corporation v7</h1>
         <table border="0" id="bodyTable">
             <tbody>
                 <tr>

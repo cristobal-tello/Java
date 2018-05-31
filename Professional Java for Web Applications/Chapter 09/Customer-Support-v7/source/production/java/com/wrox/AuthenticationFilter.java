@@ -18,10 +18,14 @@ public class AuthenticationFilter implements Filter
                          FilterChain chain) throws IOException, ServletException
     {
         HttpSession session = ((HttpServletRequest)request).getSession(false);
-        if(session == null || session.getAttribute("username") == null)
+        if(session == null || session.getAttribute("username") == null) {
+        	System.out.println("Not logged");
             ((HttpServletResponse)response).sendRedirect("login");
-        else
+        }
+        else {
+        	System.out.println("Already logged");
             chain.doFilter(request, response);
+        }
     }
 
     @Override

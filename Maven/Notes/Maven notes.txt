@@ -349,4 +349,7 @@ look for jstl and scope = provided
 </dependency>
 
 
+11) Testing in Maven
+a) Unit test occurs test phase (After compilation, before packaging)
+b) Integration test occurs in integration-test phase (After packaging, before installation)
 
